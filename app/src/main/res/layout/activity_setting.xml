@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#ffffff">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/rlMyRoom"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ffffff">
+
+            <RelativeLayout
+                android:id="@+id/rlDeviceWiFi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector"
+                android:clickable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="Device WiFi"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/tvDeviceWiFi" />
+
+                <ImageView
+                    android:id="@+id/ivDeviceWiFi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/ic_chevron_right"/>
+
+                <TextView
+                    android:id="@+id/tvDeviceWiFi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_toLeftOf="@+id/ivDeviceWiFi"
+                    android:text=""
+                    android:layout_centerInParent="true"
+                    android:textSize="10dp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlAddressClientToServer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rlDeviceWiFi"
+                android:background="@drawable/selector"
+                android:clickable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="Address(client to server)"
+                    android:textSize="16dp" />
+
+                <ImageView
+                    android:id="@+id/ivSharedUserList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/ic_chevron_right" />
+
+                <TextView
+                    android:id="@+id/tvAddressCtoS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_toLeftOf="@+id/ivSharedUserList"
+                    android:text=""
+                    android:layout_centerInParent="true"
+                    android:textSize="10dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/ivSharedUserList" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlAddressDeviceToServer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rlAddressClientToServer"
+                android:background="@drawable/selector"
+                android:clickable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="Address(device to server)"
+                    android:textSize="16dp" />
+
+                <ImageView
+                    android:id="@+id/ivPasswordChange"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/ic_chevron_right" />
+                <TextView
+                    android:id="@+id/tvAddressDtoS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_toLeftOf="@+id/ivPasswordChange"
+                    android:text=""
+                    android:layout_centerInParent="true"
+                    android:textSize="10dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/ivPasswordChange" />
+            </RelativeLayout>
+
+            <!--            <RelativeLayout-->
+            <!--                android:id="@+id/rlLogout"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_below="@+id/rlPasswordChange"-->
+            <!--                android:background="@drawable/selector"-->
+            <!--                android:clickable="true">-->
+
+            <!--                <TextView-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_marginLeft="10dp"-->
+            <!--                    android:layout_marginTop="10dp"-->
+            <!--                    android:layout_marginBottom="10dp"-->
+            <!--                    android:text="@string/textLogout"-->
+            <!--                    android:textSize="20dp" />-->
+
+            <!--                <ImageView-->
+            <!--                    android:id="@+id/ivLogout"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_alignParentRight="true"-->
+            <!--                    android:layout_marginTop="10dp"-->
+            <!--                    android:layout_marginRight="10dp"-->
+            <!--                    android:layout_marginBottom="10dp"-->
+            <!--                    android:src="@drawable/ic_chevron_right" />-->
+
+            <!--                <TextView-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="1dp"-->
+            <!--                    android:layout_below="@+id/ivLogout"-->
+            <!--                    android:background="@color/colorStop" />-->
+            <!--            </RelativeLayout>-->
+
+            <!--            <RelativeLayout-->
+            <!--                android:id="@+id/rlWithdrawal"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_below="@+id/rlLogout"-->
+            <!--                android:background="@drawable/selector"-->
+            <!--                android:clickable="true">-->
+
+            <!--                <TextView-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_marginLeft="10dp"-->
+            <!--                    android:layout_marginTop="10dp"-->
+            <!--                    android:layout_marginBottom="10dp"-->
+            <!--                    android:text="@string/textWithdrawal"-->
+            <!--                    android:textSize="20dp" />-->
+
+            <!--                <ImageView-->
+            <!--                    android:id="@+id/ivWithdrawal"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_alignParentRight="true"-->
+            <!--                    android:layout_marginTop="10dp"-->
+            <!--                    android:layout_marginRight="10dp"-->
+            <!--                    android:layout_marginBottom="10dp"-->
+            <!--                    android:src="@drawable/ic_chevron_right" />-->
+            <!--            </RelativeLayout>-->
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

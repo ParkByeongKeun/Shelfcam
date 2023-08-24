@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="90dp"
+    android:id="@+id/rlTop">
+
+
+    <ImageView
+        android:id="@+id/ivTop"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"/>
+
+    <ImageView
+        android:id="@+id/iv_title"
+        android:layout_width="140dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+        android:scaleType="fitXY" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="8dp"
+        android:text="CamCtrl"
+        android:textColor="@color/black"
+        android:id="@+id/tvTop1"
+        android:textSize="13dp" />
+
+    <TextView
+        android:id="@+id/tvTop2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvTop1"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="8dp"
+        android:text="test.jpg"
+        android:textSize="11dp" />
+    <TextView
+        android:id="@+id/tvTop3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvTop2"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="8dp"
+        android:text="date"
+        android:textSize="11dp" />
+    <TextView
+        android:id="@+id/tvTop4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:textStyle="bold"
+        android:layout_marginLeft="10dp"
+        android:text="1"
+        android:textSize="16dp" />
+
+
+</RelativeLayout>
