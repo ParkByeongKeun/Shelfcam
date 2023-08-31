@@ -8,6 +8,7 @@
         <entry key="app/src/main/res/drawable/item_background_p.xml" value="0.1685" />
         <entry key="app/src/main/res/drawable/rounded_tag.xml" value="0.1685" />
         <entry key="app/src/main/res/drawable/selector.xml" value="0.1685" />
+        <entry key="app/src/main/res/layout/activity_client_to_server.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_discovery_bluetooth_device.xml" value="0.159375" />
         <entry key="app/src/main/res/layout/activity_ios_style.xml" value="0.15833333333333333" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.22" />
@@ -17,6 +18,8 @@
         <entry key="app/src/main/res/layout/activity_setting_address.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_setting_client_to_server.xml" value="0.15833333333333333" />
         <entry key="app/src/main/res/layout/activity_setting_device_wifi.xml" value="0.159375" />
+        <entry key="app/src/main/res/layout/listview_record_item.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/ptr_header.xml" value="0.159375" />
         <entry key="app/src/main/res/layout/setting_view_basic_item_h.xml" value="0.1453125" />
         <entry key="app/src/main/res/layout/texture_view.xml" value="0.159375" />
         <entry key="app/src/main/res/layout/view_bluetooth_paired.xml" value="0.159375" />

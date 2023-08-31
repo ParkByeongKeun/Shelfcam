@@ -1,5 +1,6 @@
 package com.example.camctrl;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -58,6 +59,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -79,6 +81,8 @@ public class MainActivity extends AppCompatActivity implements Runnable, XListVi
     private Module mModule = null;
     private float mImgScaleX, mImgScaleY, mIvScaleX, mIvScaleY, mStartX, mStartY;
     RelativeLayout rlProgress;
+    DeviceAdapter mAdapter;
+    ActionBar mTitle;
 
     public static String assetFilePath(Context context, String assetName) throws IOException {
         File file = new File(context.getFilesDir(), assetName);
@@ -103,6 +107,8 @@ public class MainActivity extends AppCompatActivity implements Runnable, XListVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mTitle = getSupportActionBar();
+
         customApplication = (CustomApplication) getApplicationContext();
         rlProgress = findViewById(R.id.rlProgress);
         rlProgress.setVisibility(View.GONE);
@@ -114,11 +120,11 @@ public class MainActivity extends AppCompatActivity implements Runnable, XListVi
         listView.setXListViewListener(this);
         listView.setRefreshTime(getTime());
         getBlePermission();
-        DeviceAdapter mAdapter = new DeviceAdapter(MainActivity.this, R.layout.vw_list_item, mItems);
-        getImageList();
+
 
         mAdapter = new DeviceAdapter(MainActivity.this, R.layout.vw_list_item, mItems);
         listView.setAdapter(mAdapter);
+        getImageList();
 
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
@@ -157,7 +163,6 @@ public class MainActivity extends AppCompatActivity implements Runnable, XListVi
                 e.printStackTrace();
             }
         });
-
         final Button buttonTest = findViewById(R.id.btnRequest);
         buttonTest.setOnClickListener(v -> {
             runOnUiThread(() -> {
@@ -293,12 +298,11 @@ public class MainActivity extends AppCompatActivity implements Runnable, XListVi
 
     public void getImageList() {
         final StringBuilder sb = new StringBuilder();
-        DeviceAdapter mAdapter = new DeviceAdapter(MainActivity.this, R.layout.vw_list_item, mItems);
         listView.autoRefresh();
         mItems.clear();
-        mAdapter = new DeviceAdapter(MainActivity.this, R.layout.vw_list_item, mItems);
-        listView.setAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged();
+//        mAdapter = new DeviceAdapter(MainActivity.this, R.layout.vw_list_item, mItems);
+//        listView.setAdapter(mAdapter);
+//        mAdapter.notifyDataSetChanged();
         Thread mThread = new Thread() {
             @Override
             public void run() {
@@ -328,7 +332,34 @@ public class MainActivity extends AppCompatActivity implements Runnable, XListVi
                             for(int i = 0 ; i < customApplication.imgList.length ; i ++) {
                                 customApplication.imgList[i] = customApplication.imgList[i].replace("\"","").replace("[","").replace("]","");
                             }
-                            Arrays.sort(customApplication.imgList, Collections.reverseOrder());
+                            Arrays.sort(customApplication.imgList, Collections.reverseOrder(new Comparator<String>() {
+                                @Override
+                                public int compare(String o1, String o2) {
+                                    String[] spl1 = o1.split("_");
+                                    String[] spl2 = o2.split("_");
+                                    String resultDate1 = "";
+                                    String resultDate2 = "";
+                                    if (spl1.length == 2) {
+                                        resultDate1 = spl1[1];
+                                    }else {
+                                        resultDate1 = o1;
+                                    }
+                                    if (spl2.length == 2) {
+                                        resultDate2 = spl2[1];
+                                    }else {
+                                        resultDate2 = o2;
+                                    }
+                                    String date1 = resultDate1.replaceAll(".jpg","");
+                                    String date2 = resultDate2.replaceAll(".jpg","");
+                                    if(Double.parseDouble(date1) > Double.parseDouble(date2)) {
+                                        return 1;
+                                    }
+                                    if(Double.parseDouble(date1) < Double.parseDouble(date2)) {
+                                        return -1;
+                                    }
+                                    return 0;
+                                }
+                            }));
 
                             int position = 1;
                             for(int i = 0 ; i < customApplication.imgList.length ; i ++) {
@@ -345,7 +376,11 @@ public class MainActivity extends AppCompatActivity implements Runnable, XListVi
                                     }
                                     CustomDevice customDevice2 = new CustomDevice("http://" + address + "/image/"+imgName,imgName,MillToDate(Long.parseLong(resultDate)/1000000),String.valueOf(position));
                                     position += 1;
-                                    mItems.add(customDevice2);
+//                                    mItems.add(customDevice2);
+                                    runOnUiThread(() -> {
+                                        mAdapter.add(customDevice2);
+                                    });
+
                                 }catch (NumberFormatException e) {
                                     Log.d("yot132",e.toString());
                                 }
@@ -471,6 +506,17 @@ public class MainActivity extends AppCompatActivity implements Runnable, XListVi
                 mProgressBarMain.setVisibility(View.GONE);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        for(int i = 0 ; i < customApplication.arrAddressCtoS.size() ; i++) {
+            if (customApplication.arrAddressCtoS.get(i).contains(customApplication.strAddressCtoS)) {
+                mTitle.setTitle(customApplication.arrAddressCtoS.get(i));
+            }
+        }
     }
 
     @Override
