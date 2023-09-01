@@ -18,6 +18,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -66,6 +67,7 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements Runnable, XListView.IXListViewListener {
 
+    private long mLastClickTime = 0;
     private Handler mRefreshHandler;
     private ArrayList<CustomDevice> mItems = new ArrayList<CustomDevice>();
     private int mImageIndex = 0;
@@ -165,43 +167,45 @@ public class MainActivity extends AppCompatActivity implements Runnable, XListVi
         });
         final Button buttonTest = findViewById(R.id.btnRequest);
         buttonTest.setOnClickListener(v -> {
+            if (SystemClock.elapsedRealtime() - mLastClickTime < 1000){
+                return;
+            }
+            mLastClickTime = SystemClock.elapsedRealtime();
+            if (rlProgress.getVisibility() == View.VISIBLE) {
+                return;
+            }
             runOnUiThread(() -> {
                 rlProgress.setVisibility(View.VISIBLE);
             });
-            Thread mThread = new Thread() {
-                @Override
-                public void run() {
+            try {
+                String address = customApplication.strAddressCtoS;
+                Log.d("yot132","address = " + address);
+                URL url1 = new URL("http://" + address + "/image");
+                new Thread(()-> {
                     try {
-                        String address = customApplication.strAddressCtoS;
-                        Log.d("yot132","address = " + address);
-                        URL url1 = new URL("http://" + address + "/image");
-                        try {
-                            HttpURLConnection conn = (HttpURLConnection) url1.openConnection();
-                            conn.setDoInput(true);
-                            conn.connect();
+                        HttpURLConnection conn = (HttpURLConnection) url1.openConnection();
+                        conn.setDoInput(true);
+                        conn.connect();
 
-                            InputStream is = conn.getInputStream();
-                            mBitmap = BitmapFactory.decodeStream(is);
-                        } catch(IOException e) {
-                            runOnUiThread(()-> {
-                                Toast.makeText(getApplicationContext(),"not found device",Toast.LENGTH_SHORT).show();
-                            });
-                            e.printStackTrace();
-                        }
-                    } catch (MalformedURLException e) {
+                        InputStream is = conn.getInputStream();
+                        mBitmap = BitmapFactory.decodeStream(is);
+                    } catch(IOException e) {
+                        runOnUiThread(()-> {
+                            Toast.makeText(getApplicationContext(),"not found device",Toast.LENGTH_SHORT).show();
+                        });
                         e.printStackTrace();
                     }
-                }
+                }).start();
 
-            };
-            mThread.start();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
 
             mResultView.setVisibility(View.INVISIBLE);
             mImageIndex = (mImageIndex + 1) % mTestImages.length;
 //                buttonTest.setText(String.format("Text Image %d/%d", mImageIndex + 1, mTestImages.length));
 
-            try {
-                mThread.join();
+//                mThread.join();
                 mImageView.setImageBitmap(mBitmap);
 
 //                mProgressBar.setVisibility(ProgressBar.VISIBLE);
@@ -214,9 +218,7 @@ public class MainActivity extends AppCompatActivity implements Runnable, XListVi
                 Thread thread = new Thread(MainActivity.this);
                 thread.start();
 
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+
             getImageList();
         });
 

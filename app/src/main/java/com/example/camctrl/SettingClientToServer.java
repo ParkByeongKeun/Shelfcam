@@ -68,7 +68,7 @@ public class SettingClientToServer extends Activity {
                 }
             }
             if(isCheck) {
-                Toast.makeText(getApplicationContext(),"Address 또는 CAM ID를 다시 확인해주세요.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Please check the Address or CAM ID again.",Toast.LENGTH_SHORT).show();
             }else {
                 if(!etNewAddress.getText().toString().equals("") && !etSerial.getText().toString().equals("")) {
                     customApplication.arrAddressCtoS.add(temp);
@@ -82,7 +82,7 @@ public class SettingClientToServer extends Activity {
         });
 
         mListView.setOnItemLongClickListener((parent, view, position, id) -> {
-            showDeleteRegistererAlertDialog(customApplication.arrAddressCtoS.get(position) + " 삭제하시겠습니까?",position);
+            showDeleteRegistererAlertDialog(customApplication.arrAddressCtoS.get(position) + " Are you sure you want to delete?",position);
             return true;
         });
 

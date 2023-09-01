@@ -14,7 +14,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_object_detection.xml" value="0.159375" />
         <entry key="app/src/main/res/layout/activity_objmain.xml" value="0.15833333333333333" />
-        <entry key="app/src/main/res/layout/activity_setting.xml" value="0.607192254495159" />
+        <entry key="app/src/main/res/layout/activity_setting.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_setting_address.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_setting_client_to_server.xml" value="0.15833333333333333" />
         <entry key="app/src/main/res/layout/activity_setting_device_wifi.xml" value="0.159375" />

@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/btnSearchDevice"
-            android:text="블루투스 기기 찾기"
+            android:text="Find Bluetooth Device"
             />
 
         <ListView
