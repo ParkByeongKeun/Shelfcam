@@ -64,6 +64,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity implements Runnable, XListView.IXListViewListener {
 
@@ -163,6 +164,10 @@ public class MainActivity extends AppCompatActivity implements Runnable, XListVi
                 setDetectionImage(url);
             } catch (MalformedURLException e) {
                 e.printStackTrace();
+                Toast.makeText(getApplicationContext(),e.toString(),Toast.LENGTH_SHORT).show();
+                runOnUiThread(()-> {
+                    rlProgress.setVisibility(View.GONE);
+                });
             }
         });
         final Button buttonTest = findViewById(R.id.btnRequest);
@@ -186,12 +191,38 @@ public class MainActivity extends AppCompatActivity implements Runnable, XListVi
                         HttpURLConnection conn = (HttpURLConnection) url1.openConnection();
                         conn.setDoInput(true);
                         conn.connect();
-
                         InputStream is = conn.getInputStream();
                         mBitmap = BitmapFactory.decodeStream(is);
+                        try {
+                            Thread.sleep(100);
+                            mResultView.setVisibility(View.INVISIBLE);
+                            mImageIndex = (mImageIndex + 1) % mTestImages.length;
+                            runOnUiThread(()-> {
+                                mImageView.setImageBitmap(mBitmap);
+                                mImgScaleX = (float)mBitmap.getWidth() / PrePostProcessor.mInputWidth;
+                                mImgScaleY = (float)mBitmap.getHeight() / PrePostProcessor.mInputHeight;
+                                mIvScaleX = (mBitmap.getWidth() > mBitmap.getHeight() ? (float)mImageView.getWidth() / mBitmap.getWidth() : (float)mImageView.getHeight() / mBitmap.getHeight());
+                                mIvScaleY  = (mBitmap.getHeight() > mBitmap.getWidth() ? (float)mImageView.getHeight() / mBitmap.getHeight() : (float)mImageView.getWidth() / mBitmap.getWidth());
+                                mStartX = (mImageView.getWidth() - mIvScaleX * mBitmap.getWidth())/2;
+                                mStartY = (mImageView.getHeight() -  mIvScaleY * mBitmap.getHeight())/2;
+                                Thread thread = new Thread(MainActivity.this);
+                                thread.start();
+                                getImageList();
+                            });
+
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                            Toast.makeText(getApplicationContext(),e.toString(),Toast.LENGTH_SHORT).show();
+                            runOnUiThread(()-> {
+                                rlProgress.setVisibility(View.GONE);
+                            });
+                        }
                     } catch(IOException e) {
                         runOnUiThread(()-> {
                             Toast.makeText(getApplicationContext(),"not found device",Toast.LENGTH_SHORT).show();
+                            runOnUiThread(()-> {
+                                rlProgress.setVisibility(View.GONE);
+                            });
                         });
                         e.printStackTrace();
                     }
@@ -199,29 +230,12 @@ public class MainActivity extends AppCompatActivity implements Runnable, XListVi
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
+                Toast.makeText(getApplicationContext(),e.toString(),Toast.LENGTH_SHORT).show();
+                runOnUiThread(() -> {
+                    rlProgress.setVisibility(View.GONE);
+                });
             }
-
-            mResultView.setVisibility(View.INVISIBLE);
-            mImageIndex = (mImageIndex + 1) % mTestImages.length;
-//                buttonTest.setText(String.format("Text Image %d/%d", mImageIndex + 1, mTestImages.length));
-
-//                mThread.join();
-                mImageView.setImageBitmap(mBitmap);
-
-//                mProgressBar.setVisibility(ProgressBar.VISIBLE);
-                mImgScaleX = (float)mBitmap.getWidth() / PrePostProcessor.mInputWidth;
-                mImgScaleY = (float)mBitmap.getHeight() / PrePostProcessor.mInputHeight;
-                mIvScaleX = (mBitmap.getWidth() > mBitmap.getHeight() ? (float)mImageView.getWidth() / mBitmap.getWidth() : (float)mImageView.getHeight() / mBitmap.getHeight());
-                mIvScaleY  = (mBitmap.getHeight() > mBitmap.getWidth() ? (float)mImageView.getHeight() / mBitmap.getHeight() : (float)mImageView.getWidth() / mBitmap.getWidth());
-                mStartX = (mImageView.getWidth() - mIvScaleX * mBitmap.getWidth())/2;
-                mStartY = (mImageView.getHeight() -  mIvScaleY * mBitmap.getHeight())/2;
-                Thread thread = new Thread(MainActivity.this);
-                thread.start();
-
-
-            getImageList();
         });
-
 
 
 //        final Button buttonSelect = findViewById(R.id.selectButton);
