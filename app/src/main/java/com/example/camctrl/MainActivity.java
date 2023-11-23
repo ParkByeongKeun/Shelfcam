@@ -195,9 +195,9 @@ public class MainActivity extends AppCompatActivity implements Runnable, XListVi
                         mBitmap = BitmapFactory.decodeStream(is);
                         try {
                             Thread.sleep(100);
-                            mResultView.setVisibility(View.INVISIBLE);
                             mImageIndex = (mImageIndex + 1) % mTestImages.length;
                             runOnUiThread(()-> {
+                                mResultView.setVisibility(View.INVISIBLE);
                                 mImageView.setImageBitmap(mBitmap);
                                 mImgScaleX = (float)mBitmap.getWidth() / PrePostProcessor.mInputWidth;
                                 mImgScaleY = (float)mBitmap.getHeight() / PrePostProcessor.mInputHeight;
@@ -359,11 +359,13 @@ public class MainActivity extends AppCompatActivity implements Runnable, XListVi
                                         resultDate1 = spl1[1];
                                     }else {
                                         resultDate1 = o1;
+                                        return 0;
                                     }
                                     if (spl2.length == 2) {
                                         resultDate2 = spl2[1];
                                     }else {
                                         resultDate2 = o2;
+                                        return 0;
                                     }
                                     String date1 = resultDate1.replaceAll(".jpg","");
                                     String date2 = resultDate2.replaceAll(".jpg","");
